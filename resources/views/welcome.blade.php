@@ -451,16 +451,16 @@
                 <h5 class="mb-2 text-titlecase mb-4">Tính tiền điện</h5>
                 <div class="row col-md-12">
                     <div class="input-group col-md-5">
-                        <input type="search" id="makh" class="form-control rounded"
+                        <input type="search" id="madk" class="form-control rounded"
                                placeholder="Mã điện kế "
                                aria-describedby="search-addon"/>
                     </div>
                     &nbsp&nbsp&nbsp&nbsp
                     <div class="input-group col-md-5">
                         <input id="sodien" type="text" class="form-control rounded" placeholder="Số điện"/>
-                        <input id="ky" type="text" class="form-control rounded" placeholder= "kỳ"/>
+                        <input id="ky" type="text" class="form-control rounded" placeholder="kỳ"/>
 
-                        <button type="button" class="btn btn-outline-primary">tính tiền</button>
+                        <button id="btntinhtien" type="button" class="btn btn-outline-primary">tính tiền</button>
                     </div>
                 </div>
                 <br>
@@ -644,18 +644,22 @@
 <script>
 
     $(document).ready(function () {
-        $.ajax({
-            url: "some.php",
-            method: "POST",
-            url: "some.php",
-            data: { name: "John", location: "Boston" }
-        })
-            .done(function( msg ) {
-                alert( "Data Saved: " + msg );
-            });
+
         $('#table_id').DataTable();
         $('#sodien').click(function () {
-            $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Thông tin khách hàng</h5>
+            var madk1 = $('#madk').val();
+            console.log(madk1);
+            $.ajax({
+                url: 'http://localhost/electric/public/dien-ke',
+                type: 'GET',
+                data: {
+                    madk: madk1,
+                }
+            }).done(function (ketqua) {
+                ketqua = JSON.parse(ketqua);
+                for (var i = 0; i <= ketqua.length; i++) {
+                    console.log(ketqua[i]);
+                    $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Thông tin khách hàng</h5>
                 <div class="card-body bg-gradient-primary">
                 <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
                 <div class="row align-items-center h-100">
@@ -665,12 +669,12 @@
                 </figure>
             </div>
             <div class="col-md-8">
-                <h5 class="text-white text-center text-md-left">Phoebe Kennedy</h5>
-                <p class="text-white text-center text-md-left">kennedy@gmail.com</p>
+                <h5 class="text-white text-center text-md-left"> Họ Tên : ` + ketqua[i].tenkh + `</h5>
+                <p class="text-white text-center text-md-left"> Địa chỉ : ` + ketqua[i].diachi + `</p>
                 <div class="d-flex align-items-center justify-content-between info pt-2">
                     <div>
-                        <p class="text-white font-weight-bold">Birth date</p>
-                        <p class="text-white font-weight-bold">Birth city</p>
+                        <p class="text-white font-weight-bold"> Điện thoại : ` + ketqua[i].dt + `</p>
+                        <p class="text-white font-weight-bold">CMND : ` + ketqua[i].cmnd + `</p>
                     </div>
                     <div>
                         <p class="text-white">16 Sep 2019</p>
@@ -680,14 +684,41 @@
             </div>
         </div>
         </div>`)
+                }
+            });
+
 
         });
+        $('#btntinhtien').click(function () {
+            var madk1 = $('#madk').val();
+            var sodien1  = $('#sodien').val();
+            var ky1  = $('#ky').val();
+            $.ajax({
+                url: 'http://localhost/electric/public/dien-ke',
+                type: 'GET',
+                data: {
+                    madk: madk1,
+                    sodien:sodien1,
+                    ky:ky1
+                }
+            }).done(function (ketqua) {
+                console.log(ketqua)
+                ketqua = JSON.parse(ketqua);
+                for (var i = 0; i <= ketqua.length; i++) {
+                    console.log(ketqua[i]);
 
+                }
+            });
+
+
+        });
     });
 
-    function closex(){
-            $('#infoCustomer').html('');
-            $('#makh').value('');
+
+
+    function closex() {
+        $('#infoCustomer').html('');
+        $('#makh').value('');
     }
 </script>
 <!-- End custom js for this page-->
