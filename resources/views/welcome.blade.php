@@ -470,7 +470,7 @@
 
                 </div>
                 <br>
-                <h5 class="mb-2 text-titlecase mb-4">Danh sách tiền điện hôm nay</h5>
+                <h5 class="mb-2 text-titlecase mb-4">Danh sách hóa đơn  </h5>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -478,23 +478,23 @@
                                 <table id="table_id" class="display table table-striped project-orders-table">
                                     <thead>
                                     <tr>
-                                        <th class="ml-5">ID</th>
-                                        <th>Project name</th>
-                                        <th>Customer</th>
-                                        <th>Deadline</th>
-                                        <th>Payouts</th>
-                                        <th>Traffic</th>
+                                        <th class="ml-5">Mã Khách hàng</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Số điện thoại </th>
+                                        <th>Địa chỉ</th>
+                                        <th>CMND </th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="data">
+                                    @foreach($user as $key=> $item)
                                     <tr>
-                                        <td>#D1</td>
-                                        <td>Consectetur adipisicing elit</td>
-                                        <td>Beulah Cummings</td>
-                                        <td>03 Jan 2019</td>
-                                        <td>$ 5235</td>
-                                        <td>1.3K</td>
+                                        <td>#{{($item->makh)}}</td>
+                                        <td>{{($item->tenkh)}}</td>
+                                        <td>{{($item->dt)}}</td>
+                                        <td>{{($item->diachi)}}</td>
+                                        <td>{{($item->cmnd)}}</td>
+
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
@@ -508,86 +508,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>#D2</td>
-                                        <td>Correlation natural resources silo</td>
-                                        <td>Mitchel Dunford</td>
-                                        <td>09 Oct 2019</td>
-                                        <td>$ 3233</td>
-                                        <td>5.4K</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#D3</td>
-                                        <td>social capital compassion social</td>
-                                        <td>Pei Canaday</td>
-                                        <td>18 Jun 2019</td>
-                                        <td>$ 4311</td>
-                                        <td>2.1K</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#D4</td>
-                                        <td>empower communities thought</td>
-                                        <td>Gaynell Sharpton</td>
-                                        <td>23 Mar 2019</td>
-                                        <td>$ 7743</td>
-                                        <td>2.7K</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#D5</td>
-                                        <td> Targeted effective; mobilize</td>
-                                        <td>Audrie Midyett</td>
-                                        <td>22 Aug 2019</td>
-                                        <td>$ 2455</td>
-                                        <td>1.2K</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @endforeach
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -644,12 +567,48 @@
 <script>
 
     $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost/electric/public/hoa-don',
+            type: 'GET',
+            data: {
+            }
+        }).done(function (ketqua) {
+            ketqua = JSON.parse(ketqua);
+            console.log(ketqua);
+            if (ketqua.length > 0) {
+                var data ='';
+                for (var i = 0; i < ketqua.length; i++) {
+                    data +=` <tr>
+                                        <td>`+ketqua[i].makh+`</td>
+                                        <td>`+ketqua[i].tenkh+`</td>
+                                        <td>`+ketqua[i].dt+`</td>
+                                        <td>`+ketqua[i].diachi+`</td>
+                                        <td>`+ketqua[i].cmnd+`</td>
 
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                                    Edit
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
+                                                    Delete
+                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>`;
+                    $('#data').html(data)
+                }
+            } else {
+                $('#data').html(``);
+            }
+        });
         $('#table_id').DataTable();
         $('#sodien').click(function () {
             var madk1 = $('#madk').val();
-            console.log(madk1);
-            $.ajax({
+
+            var request = $.ajax({
                 url: 'http://localhost/electric/public/dien-ke',
                 type: 'GET',
                 data: {
@@ -657,15 +616,16 @@
                 }
             }).done(function (ketqua) {
                 ketqua = JSON.parse(ketqua);
-                for (var i = 0; i <= ketqua.length; i++) {
-                    console.log(ketqua[i]);
-                    $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Thông tin khách hàng</h5>
+                if (ketqua.length > 0) {
+                    for (var i = 0; i <= ketqua.length; i++) {
+
+                        $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Thông tin khách hàng</h5>
                 <div class="card-body bg-gradient-primary">
                 <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
                 <div class="row align-items-center h-100">
                 <div class="col-md-4">
                 <figure class="avatar mx-auto mb-4 mb-md-0">
-                <img src="images/faces/face20.jpg" alt="avatar">
+
                 </figure>
             </div>
             <div class="col-md-8">
@@ -684,6 +644,9 @@
             </div>
         </div>
         </div>`)
+                    }
+                } else {
+                    $('#infoCustomer').html(`<p class="text-danger">Mã điện kế không đúng khách hàng không tồn tại </p>`);
                 }
             });
 
@@ -691,30 +654,57 @@
         });
         $('#btntinhtien').click(function () {
             var madk1 = $('#madk').val();
-            var sodien1  = $('#sodien').val();
-            var ky1  = $('#ky').val();
+            var sodien1 = $('#sodien').val();
+            var ky1 = $('#ky').val();
             $.ajax({
                 url: 'http://localhost/electric/public/dien-ke',
                 type: 'GET',
                 data: {
                     madk: madk1,
-                    sodien:sodien1,
-                    ky:ky1
+                    sodien: sodien1,
+                    ky: ky1
                 }
             }).done(function (ketqua) {
-                console.log(ketqua)
-                ketqua = JSON.parse(ketqua);
-                for (var i = 0; i <= ketqua.length; i++) {
-                    console.log(ketqua[i]);
 
-                }
+                $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Kết quả tính tiền điện</h5>
+                    <div class="card-body bg-gradient-secondary">
+                        <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
+                        <div class="row align-items-center h-100">
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-8">
+                                <p class="text-danger text-center text-md-left"> Số điện cũ  :` + ketqua.socu + ` </p>
+                                <p class="text-danger text-center text-md-left"> Số điện mới : ` +addCommas( sodien1) + `  </p>
+                            <p class="text-danger text-center text-md-left"> Số điện : ` + addCommas(ketqua.sodien)+ `  </p>
+                                <div class="d-flex align-items-center justify-content-between info pt-2">
+                                    <div>
+                                        <p class="text-black font-weight-bold">Cách tính : ` + ketqua.output + `</p>
+                                        <p class="text-black font-weight-bold">Tổng số tiền : ` + addCommas(ketqua.tiendien)  + `VNĐ</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>`);
+
+
             });
 
 
         });
     });
-
-
+    function addCommas(nStr)
+    {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 
     function closex() {
         $('#infoCustomer').html('');

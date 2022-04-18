@@ -14,11 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+Route::get('/', [\App\Http\Controllers\dienkeController::class, 'index']);
 //Route::get('/dien-ke', function () {
 //    return "Hello vi-magento. Đây là route đầu tiên.";
 //});
 Route::get('/dien-ke', [\App\Http\Controllers\dienkeController::class, 'calculateElectric']);
+Route::get('/hoa-don', [\App\Http\Controllers\dienkeController::class, 'getHoadon']);
