@@ -457,7 +457,7 @@
                     </div>
                     &nbsp&nbsp&nbsp&nbsp
                     <div class="input-group col-md-5">
-                        <input id="sodien" type="text" class="form-control rounded" placeholder="Số điện"/>
+                        <input id="sodien" type="number"  class="form-control rounded" placeholder="Số điện"/>
                         <input id="ky" type="text" class="form-control rounded" placeholder="kỳ"/>
 
                         <button id="btntinhtien" type="button" class="btn btn-outline-primary">tính tiền</button>
@@ -478,7 +478,8 @@
                                 <table id="table_id" class="display table table-striped project-orders-table">
                                     <thead>
                                     <tr>
-                                        <th class="ml-5">Mã Khách hàng</th>
+                                        <th class="ml-5">Mã hóa đơn</th>
+                                        <th>Mã điện kế</th>
                                         <th>Tên khách hàng</th>
                                         <th>Số điện thoại </th>
                                         <th>Địa chỉ</th>
@@ -489,7 +490,8 @@
                                     <tbody id="data">
                                     @foreach($user as $key=> $item)
                                     <tr>
-                                        <td>#{{($item->makh)}}</td>
+                                        <td>#{{($item->mahd)}}</td>
+                                        <td>{{($item->madk)}}</td>
                                         <td>{{($item->tenkh)}}</td>
                                         <td>{{($item->dt)}}</td>
                                         <td>{{($item->diachi)}}</td>
@@ -497,13 +499,9 @@
 
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                                <button type="button" onclick="editData('{{($item->mahd)}}')" class="btn btn-success btn-sm btn-icon-text mr-3">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -567,43 +565,43 @@
 <script>
 
     $(document).ready(function () {
-        $.ajax({
-            url: 'http://localhost/electric/public/hoa-don',
-            type: 'GET',
-            data: {
-            }
-        }).done(function (ketqua) {
-            ketqua = JSON.parse(ketqua);
-            console.log(ketqua);
-            if (ketqua.length > 0) {
-                var data ='';
-                for (var i = 0; i < ketqua.length; i++) {
-                    data +=` <tr>
-                                        <td>`+ketqua[i].makh+`</td>
-                                        <td>`+ketqua[i].tenkh+`</td>
-                                        <td>`+ketqua[i].dt+`</td>
-                                        <td>`+ketqua[i].diachi+`</td>
-                                        <td>`+ketqua[i].cmnd+`</td>
-
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                                    Edit
-                                                    <i class="typcn typcn-edit btn-icon-append"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-                                                    Delete
-                                                    <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>`;
-                    $('#data').html(data)
-                }
-            } else {
-                $('#data').html(``);
-            }
-        });
+        // $.ajax({
+        //     url: 'http://localhost/electric/public/dien-ke',
+        //     type: 'GET',
+        //     data: {
+        //     }
+        // }).done(function (ketqua) {
+        //     ketqua = JSON.parse(ketqua);
+        //     console.log(ketqua);
+        //     if (ketqua.length > 0) {
+        //         var data ='';
+        //         for (var i = 0; i < ketqua.length; i++) {
+        //             data +=` <tr>
+        //                                 <td>`+ketqua[i].makh+`</td>
+        //                                 <td>`+ketqua[i].tenkh+`</td>
+        //                                 <td>`+ketqua[i].dt+`</td>
+        //                                 <td>`+ketqua[i].diachi+`</td>
+        //                                 <td>`+ketqua[i].cmnd+`</td>
+        //
+        //                                 <td>
+        //                                     <div class="d-flex align-items-center">
+        //                                         <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+        //                                             Edit
+        //                                             <i class="typcn typcn-edit btn-icon-append"></i>
+        //                                         </button>
+        //                                         <button type="button" class="btn btn-danger btn-sm btn-icon-text">
+        //                                             Delete
+        //                                             <i class="typcn typcn-delete-outline btn-icon-append"></i>
+        //                                         </button>
+        //                                     </div>
+        //                                 </td>
+        //                             </tr>`;
+        //             $('#data').html(data)
+        //         }
+        //     } else {
+        //         $('#data').html(``);
+        //     }
+        // });
         $('#table_id').DataTable();
         $('#sodien').click(function () {
             var madk1 = $('#madk').val();
@@ -624,11 +622,10 @@
                 <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
                 <div class="row align-items-center h-100">
                 <div class="col-md-4">
-                <figure class="avatar mx-auto mb-4 mb-md-0">
 
-                </figure>
             </div>
             <div class="col-md-8">
+                <h5 class="text-white text-center text-md-left"> Mã điện kế : ` + ketqua[i].madk + `</h5>
                 <h5 class="text-white text-center text-md-left"> Họ Tên : ` + ketqua[i].tenkh + `</h5>
                 <p class="text-white text-center text-md-left"> Địa chỉ : ` + ketqua[i].diachi + `</p>
                 <div class="d-flex align-items-center justify-content-between info pt-2">
@@ -637,8 +634,7 @@
                         <p class="text-white font-weight-bold">CMND : ` + ketqua[i].cmnd + `</p>
                     </div>
                     <div>
-                        <p class="text-white">16 Sep 2019</p>
-                        <p class="text-white">Netherlands</p>
+
                     </div>
                 </div>
             </div>
@@ -653,20 +649,32 @@
 
         });
         $('#btntinhtien').click(function () {
+            var flag = true ;
             var madk1 = $('#madk').val();
             var sodien1 = $('#sodien').val();
             var ky1 = $('#ky').val();
-            $.ajax({
-                url: 'http://localhost/electric/public/dien-ke',
-                type: 'GET',
-                data: {
-                    madk: madk1,
-                    sodien: sodien1,
-                    ky: ky1
-                }
-            }).done(function (ketqua) {
+            if(madk1.length == 0 || sodien1.length == 0 || ky1.length == 0 )
+            {
+                alert('không được để rỗng Mã điện kế , Số điện và kỳ !')
+                flag = false;
+            }
+            if(sodien1 < 0 || ky1 < 0)
+            {
+                alert('Số điện và kỳ phải lớn hơn 0 ');
+                flag = false;
+            }
+            if(flag == true) {
+                $.ajax({
+                    url: 'http://localhost/electric/public/dien-ke',
+                    type: 'GET',
+                    data: {
+                        madk: madk1,
+                        sodien: sodien1,
+                        ky: ky1
+                    }
+                }).done(function (ketqua) {
 
-                $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Kết quả tính tiền điện</h5>
+                    $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Kết quả tính tiền điện</h5>
                     <div class="card-body bg-gradient-secondary">
                         <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
                         <div class="row align-items-center h-100">
@@ -674,12 +682,12 @@
                             </div>
                             <div class="col-md-8">
                                 <p class="text-danger text-center text-md-left"> Số điện cũ  :` + ketqua.socu + ` </p>
-                                <p class="text-danger text-center text-md-left"> Số điện mới : ` +addCommas( sodien1) + `  </p>
-                            <p class="text-danger text-center text-md-left"> Số điện : ` + addCommas(ketqua.sodien)+ `  </p>
+                                <p class="text-danger text-center text-md-left"> Số điện mới : ` + addCommas(sodien1) + `  </p>
+                            <p class="text-danger text-center text-md-left"> Số điện : ` + addCommas(ketqua.sodien) + `  </p>
                                 <div class="d-flex align-items-center justify-content-between info pt-2">
                                     <div>
                                         <p class="text-black font-weight-bold">Cách tính : ` + ketqua.output + `</p>
-                                        <p class="text-black font-weight-bold">Tổng số tiền : ` + addCommas(ketqua.tiendien)  + `VNĐ</p>
+                                        <p class="text-black font-weight-bold">Tổng số tiền : ` + addCommas(ketqua.tiendien) + `VNĐ</p>
                                     </div>
 
                                 </div>
@@ -688,11 +696,13 @@
                     </div>`);
 
 
-            });
+                });
 
-
+            }
         });
+
     });
+ 
     function addCommas(nStr)
     {
         nStr += '';
