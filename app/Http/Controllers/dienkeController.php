@@ -110,7 +110,7 @@ class dienkeController extends Controller
                 ->orderBy('ky', 'desc')
                     ->get();
 
-            return view('welcome')->with('user', $user);;
+            return view('welcome')->with('user', $user);
         }
         private function createID($madk){
             $data = DB::table('hoadon')
@@ -120,6 +120,11 @@ class dienkeController extends Controller
                 ->where('dienke.madk', '=', $madk)
                 ->orderBy('ky', 'desc')
                 ->Count();
+            return $data;
+        }
+        public function viewgiadien(){
+            $data = DB::table('giadien')->get();
+            return view('giadien')->with('giadien',$data );
             return $data;
         }
 

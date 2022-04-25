@@ -435,26 +435,31 @@
                     </div>
                 </li>
 
-
             </ul>
         </nav>
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
                 <br>
-                <h5 class="mb-2 text-titlecase mb-4">Tính tiền điện</h5>
+                <h5 class="mb-2 text-titlecase mb-4">Thêm giá điện </h5>
                 <div class="row col-md-12">
+{{--                    <div class="input-group col-md-5">--}}
+{{--                        <input type="search" id="madk" class="form-control rounded"--}}
+{{--                               placeholder="Mã điện kế "--}}
+{{--                               aria-describedby="search-addon"/>--}}
+{{--                    </div>--}}
                     <div class="input-group col-md-5">
-                        <input type="search" id="madk" class="form-control rounded"
-                               placeholder="Mã điện kế "
-                               aria-describedby="search-addon"/>
-                    </div>
+                                                <input type="search" id="tenbac" class="form-control rounded"
+                                                       placeholder="tên bậc điện "
+                                                       aria-describedby="search-addon"/>
+                                            </div>
                     &nbsp&nbsp&nbsp&nbsp
                     <div class="input-group col-md-5">
-                        <input id="sodien" type="number"  class="form-control rounded" placeholder="Số điện"/>
-                        <input id="ky" type="text" class="form-control rounded" placeholder="kỳ"/>
+                        <input id="tuso" type="number"  class="form-control rounded" placeholder="Số điện bắt đầu"/>
+                        <input id="denso" type="number"  class="form-control rounded" placeholder="Số điện kết thúc"/>
+                        <input id="gia" type="number" class="form-control rounded" placeholder="gia"/>
 
-                        <button id="btntinhtien" type="button" class="btn btn-outline-primary">tính tiền</button>
+                        <button id="btnthem" type="button" class="btn btn-outline-primary">Thêm</button>
                     </div>
                 </div>
                 <br>
@@ -472,28 +477,26 @@
                                 <table id="table_id" class="display table table-striped project-orders-table">
                                     <thead>
                                     <tr>
-                                        <th class="ml-5">Mã hóa đơn</th>
-                                        <th>Mã điện kế</th>
-                                        <th>Tên khách hàng</th>
-                                        <th>Số điện thoại </th>
-                                        <th>Địa chỉ</th>
-                                        <th>CMND </th>
+                                        <th class="ml-5">Mã bậc</th>
+                                        <th>Tên bậc</th>
+                                        <th>Từ số</th>
+                                        <th>Đến số </th>
+                                        <th>Đơn giá</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody id="data">
-                                    @foreach($user as $key=> $item)
+                                    @foreach($giadien as $key=> $item)
                                     <tr>
-                                        <td>#{{($item->mahd)}}</td>
-                                        <td>{{($item->madk)}}</td>
-                                        <td>{{($item->tenkh)}}</td>
-                                        <td>{{($item->dt)}}</td>
-                                        <td>{{($item->diachi)}}</td>
-                                        <td>{{($item->cmnd)}}</td>
+                                        <td>#{{($item->mabac)}}</td>
+                                        <td>{{($item->tenbac)}}</td>
+                                        <td>{{($item->tusokw)}}</td>
+                                        <td>{{($item->densokw)}}</td>
+                                        <td>{{($item->dongia)}}</td>
 
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <button type="button" onclick="editData('{{($item->mahd)}}')" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                                <button type="button" onclick="editData('{{($item->mabac)}}')" class="btn btn-success btn-sm btn-icon-text mr-3">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </button>
@@ -642,7 +645,7 @@
 
 
         });
-        $('#btntinhtien').click(function () {
+        $('#btnthem').click(function () {
             var flag = true ;
             var madk1 = $('#madk').val();
             var sodien1 = $('#sodien').val();
