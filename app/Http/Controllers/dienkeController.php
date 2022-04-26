@@ -127,5 +127,43 @@ class dienkeController extends Controller
             return view('giadien')->with('giadien',$data );
             return $data;
         }
+        public function themgiadien(Request $request){
+            $tenbac = $request->input('tenbac');
+            $tuso = $request->input('tuso');
+            $denso = $request->input('denso');
+            $gia = $request->input('gia');
+            $date = new \DateTime(' now');
+            $denngay = $date->format('Y-m-d') . ' ' . "00:00:00";
+            $mabac = $request->input('mabac');
+            if($mabac){
+                DB::table('giadien')
+                ->where('mabac', $mabac)
+                    ->update([
+                        'tenbac' => $tenbac,
+                        'tusokw' => $tuso,
+                        'densokw' => $denso,
+                        'dongia' => $gia,
+                        'ngayapdung' => $denngay
+                    ]);
+            }else {
+                DB::table('giadien')->insert([
+                    'tenbac' => $tenbac,
+                    'tusokw' => $tuso,
+                    'densokw' => $denso,
+                    'dongia' => $gia,
+                    'ngayapdung' => $denngay
+
+
+                ]);
+            }
+            return true;
+        }
+        public function getgiadien(Request $request)
+        {
+            $mabac = $request->input('mabac');
+            $data = DB::table('giadien')->where('mabac','=',$mabac)
+            ->get();
+            echo json_encode($data);
+        }
 
 }

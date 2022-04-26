@@ -25,3 +25,7 @@ Route::get('/dien-ke', [\App\Http\Controllers\dienkeController::class, 'calculat
 Route::get('/hoa-don', [\App\Http\Controllers\dienkeController::class, 'getHoadon']);
 
 Route::get('/view-giadien', [\App\Http\Controllers\dienkeController::class, 'viewgiadien']);
+Route::get('/add-giadien', [\App\Http\Controllers\dienkeController::class, 'themgiadien']);
+Route::get('/getgiadien', [\App\Http\Controllers\dienkeController::class, 'getgiadien']);
+
+

@@ -443,11 +443,11 @@
                 <br>
                 <h5 class="mb-2 text-titlecase mb-4">Thêm giá điện </h5>
                 <div class="row col-md-12">
-{{--                    <div class="input-group col-md-5">--}}
-{{--                        <input type="search" id="madk" class="form-control rounded"--}}
-{{--                               placeholder="Mã điện kế "--}}
-{{--                               aria-describedby="search-addon"/>--}}
-{{--                    </div>--}}
+
+                        <input type="hidden" id="mabac" class="form-control rounded"
+                               placeholder="Mã bac "
+                               aria-describedby="search-addon"/>
+
                     <div class="input-group col-md-5">
                                                 <input type="search" id="tenbac" class="form-control rounded"
                                                        placeholder="tên bậc điện "
@@ -562,43 +562,6 @@
 <script>
 
     $(document).ready(function () {
-        // $.ajax({
-        //     url: 'http://localhost/electric/public/dien-ke',
-        //     type: 'GET',
-        //     data: {
-        //     }
-        // }).done(function (ketqua) {
-        //     ketqua = JSON.parse(ketqua);
-        //     console.log(ketqua);
-        //     if (ketqua.length > 0) {
-        //         var data ='';
-        //         for (var i = 0; i < ketqua.length; i++) {
-        //             data +=` <tr>
-        //                                 <td>`+ketqua[i].makh+`</td>
-        //                                 <td>`+ketqua[i].tenkh+`</td>
-        //                                 <td>`+ketqua[i].dt+`</td>
-        //                                 <td>`+ketqua[i].diachi+`</td>
-        //                                 <td>`+ketqua[i].cmnd+`</td>
-        //
-        //                                 <td>
-        //                                     <div class="d-flex align-items-center">
-        //                                         <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
-        //                                             Edit
-        //                                             <i class="typcn typcn-edit btn-icon-append"></i>
-        //                                         </button>
-        //                                         <button type="button" class="btn btn-danger btn-sm btn-icon-text">
-        //                                             Delete
-        //                                             <i class="typcn typcn-delete-outline btn-icon-append"></i>
-        //                                         </button>
-        //                                     </div>
-        //                                 </td>
-        //                             </tr>`;
-        //             $('#data').html(data)
-        //         }
-        //     } else {
-        //         $('#data').html(``);
-        //     }
-        // });
         $('#table_id').DataTable();
         $('#sodien').click(function () {
             var madk1 = $('#madk').val();
@@ -647,59 +610,67 @@
         });
         $('#btnthem').click(function () {
             var flag = true ;
-            var madk1 = $('#madk').val();
-            var sodien1 = $('#sodien').val();
-            var ky1 = $('#ky').val();
-            if(madk1.length == 0 || sodien1.length == 0 || ky1.length == 0 )
+            var tenbac1 = $('#tenbac').val();
+            var tuso1 = $('#tuso').val();
+            var denso1  = $('#denso').val();
+            var gia1 = $('#gia').val();
+            var mabac1 = $('#mabac').val();
+
+            if(tenbac1.length == 0 || tuso1.length == 0 || denso1.length == 0 || gia1.length == 0 )
             {
-                alert('không được để rỗng Mã điện kế , Số điện và kỳ !')
+                alert('không được để rỗng dữ liệu !')
                 flag = false;
             }
-            if(sodien1 < 0 || ky1 < 0)
+            if(tuso1 < 0 || denso1 < 0)
             {
-                alert('Số điện và kỳ phải lớn hơn 0 ');
+                alert('Từ số và đến số lớn hơn 0 ');
                 flag = false;
             }
             if(flag == true) {
                 $.ajax({
-                    url: 'http://localhost/electric/public/dien-ke',
+                    url: 'http://localhost/electric/public/add-giadien',
                     type: 'GET',
                     data: {
-                        madk: madk1,
-                        sodien: sodien1,
-                        ky: ky1
+                        tenbac: tenbac1,
+                        tuso: tuso1,
+                        denso: denso1,
+                        gia: gia1,
+                        mabac:mabac1
                     }
                 }).done(function (ketqua) {
 
-                    $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Kết quả tính tiền điện</h5>
-                    <div class="card-body bg-gradient-secondary">
-                        <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
-                        <div class="row align-items-center h-100">
-                            <div class="col-md-4">
-                            </div>
-                            <div class="col-md-8">
-                                <p class="text-danger text-center text-md-left"> Số điện cũ  :` + ketqua.socu + ` </p>
-                                <p class="text-danger text-center text-md-left"> Số điện mới : ` + addCommas(sodien1) + `  </p>
-                            <p class="text-danger text-center text-md-left"> Số điện : ` + addCommas(ketqua.sodien) + `  </p>
-                                <div class="d-flex align-items-center justify-content-between info pt-2">
-                                    <div>
-                                        <p class="text-black font-weight-bold">Cách tính : ` + ketqua.output + `</p>
-                                        <p class="text-black font-weight-bold">Tổng số tiền : ` + addCommas(ketqua.tiendien) + `VNĐ</p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>`);
+                    location.reload()
 
 
                 });
 
             }
+            $('#mabac').val('');
         });
 
     });
+    function  editData(mabac){
+        $.ajax({
+            url: 'http://localhost/electric/public/getgiadien',
+            type: 'GET',
+            data: {
+                mabac: mabac,
+            }
+        }).done(function (ketqua) {
+            console.log(ketqua);
+            ketqua = JSON.parse(ketqua);
+            for (var i = 0; i <= ketqua.length; i++) {
+                console.log(ketqua[i].tenbac);
+                $('#tenbac').val(ketqua[i].tenbac);
+                $('#tuso').val(ketqua[i].tusokw);
+                $('#denso').val(ketqua[i].densokw);
+                $('#gia').val(ketqua[i].dongia);
+                $('#mabac').val(ketqua[i].mabac);
+            }
+        });
 
+
+    }
     function addCommas(nStr)
     {
         nStr += '';
