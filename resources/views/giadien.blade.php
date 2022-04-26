@@ -696,7 +696,7 @@
             }
         }).done(function (ketqua) {
             location.reload()
-            
+
         });
 
 

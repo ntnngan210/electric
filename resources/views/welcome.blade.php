@@ -689,8 +689,9 @@
                         </div>
                     </div>`);
 
-
+                    location.reload()
                 });
+
 
             }
         });

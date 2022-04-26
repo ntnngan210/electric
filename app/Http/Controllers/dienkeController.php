@@ -39,7 +39,7 @@ class dienkeController extends Controller
                     $result['sodien'] = (int)$sodien;
                 }
                 if($sodien > 0 ){
-                    $giadien = DB::table('giadien')->where('tinhtrang',1)->orderBy('densokw','asc')->get();
+                    $giadien = DB::table('giadien')->where('trangthai',1)->orderBy('densokw','asc')->get();
                     $tongtiendien= 0;
                     $sodiengannhat = 0;
                     $text = "Công thức tính là : ";

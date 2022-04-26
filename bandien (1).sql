@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2022 at 06:27 PM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 7.4.19
+-- Generation Time: Apr 26, 2022 at 05:19 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -72,19 +72,22 @@ CREATE TABLE `giadien` (
   `tusokw` int(11) NOT NULL,
   `densokw` int(11) NOT NULL,
   `dongia` int(11) NOT NULL,
-  `ngayapdung` datetime NOT NULL
+  `ngayapdung` datetime NOT NULL,
+  `trangthai` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `giadien`
 --
 
-INSERT INTO `giadien` (`mabac`, `tenbac`, `tusokw`, `densokw`, `dongia`, `ngayapdung`) VALUES
-(1, 'bac 1', 0, 100, 1242, '2022-04-18 13:02:34'),
-(2, 'bac 2', 101, 150, 1304, '2022-04-18 13:02:34'),
-(3, 'bac 3', 151, 200, 1651, '2022-04-18 13:02:34'),
-(4, 'bac 4', 201, 300, 1788, '2022-04-18 13:02:34'),
-(5, 'bac 5', 301, 400, 1912, '2022-04-18 13:02:34');
+INSERT INTO `giadien` (`mabac`, `tenbac`, `tusokw`, `densokw`, `dongia`, `ngayapdung`, `trangthai`) VALUES
+(1, 'bac 1', 0, 100, 1242, '2022-04-18 13:02:34', 1),
+(2, 'bac 2', 101, 150, 1304, '2022-04-18 13:02:34', 1),
+(3, 'bac 3', 151, 200, 1651, '2022-04-18 13:02:34', 1),
+(4, 'bac 4', 201, 300, 1788, '2022-04-18 13:02:34', 1),
+(5, 'bac 5', 301, 400, 1912, '2022-04-18 13:02:34', 1),
+(6, 'bac 6', 454545, 45454, 10000, '2022-04-26 00:00:00', 0),
+(7, 'bac7', 12114, 21212, 5, '2022-04-26 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -111,7 +114,10 @@ CREATE TABLE `hoadon` (
 
 INSERT INTO `hoadon` (`mahd`, `madk`, `ky`, `tungay`, `denngay`, `chisodau`, `chisocuoi`, `tongthanhtien`, `ngaylaphd`, `tinhtrang`) VALUES
 ('HD0DK00110', 'DK001', '1', '2022-04-24 00:00:00', '2022-04-07 00:00:00', 0, 320, 10579607, '2022-04-24 00:00:00', b'0'),
-('HD0DK00121', 'DK001', '2', '2022-04-07 00:00:00', '2022-04-24 00:00:00', 320, 526, 279723, '2022-04-24 00:00:00', b'0');
+('HD0DK00121', 'DK001', '2', '2022-04-07 00:00:00', '2022-04-24 00:00:00', 320, 526, 279723, '2022-04-24 00:00:00', b'0'),
+('HD0DK00152', 'DK001', '5', '2022-04-24 00:00:00', '2022-04-26 00:00:00', 526, 541, 18630, '2022-04-26 00:00:00', b'0'),
+('HD0DK00163', 'DK001', '6', '2022-04-26 00:00:00', '2022-04-26 00:00:00', 541, 54545, 103128055, '2022-04-26 00:00:00', b'0'),
+('HD0DK00340', 'DK003', '4', '2022-04-26 00:00:00', '2022-04-26 00:00:00', 0, 54545, 104162447, '2022-04-26 00:00:00', b'0');
 
 -- --------------------------------------------------------
 
@@ -181,6 +187,16 @@ ALTER TABLE `hoadon`
 --
 ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`makh`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `giadien`
+--
+ALTER TABLE `giadien`
+  MODIFY `mabac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
