@@ -39,7 +39,7 @@ class dienkeController extends Controller
                     $result['sodien'] = (int)$sodien;
                 }
                 if($sodien > 0 ){
-                    $giadien = DB::table('giadien')->orderBy('densokw','asc')->get();
+                    $giadien = DB::table('giadien')->where('tinhtrang',1)->orderBy('densokw','asc')->get();
                     $tongtiendien= 0;
                     $sodiengannhat = 0;
                     $text = "Công thức tính là : ";
@@ -164,6 +164,26 @@ class dienkeController extends Controller
             $data = DB::table('giadien')->where('mabac','=',$mabac)
             ->get();
             echo json_encode($data);
+        }
+        public function blockgiadien(Request $request)
+        {
+            $mabac = $request->input('mabac');
+            $giadien = DB::table('giadien')
+                ->where('mabac', $mabac)->first();
+            if($giadien->trangthai==0){
+                $data = DB::table('giadien')
+                    ->where('mabac', $mabac)
+                    ->update([
+                        'trangthai' => 1]);
+            }
+            else{
+                $data = DB::table('giadien')
+                    ->where('mabac', $mabac)
+                    ->update([
+                        'trangthai' => 0]);
+            }
+            return true;
+
         }
 
 }

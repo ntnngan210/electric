@@ -482,6 +482,7 @@
                                         <th>Từ số</th>
                                         <th>Đến số </th>
                                         <th>Đơn giá</th>
+                                        <th>Trang thai</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -493,13 +494,28 @@
                                         <td>{{($item->tusokw)}}</td>
                                         <td>{{($item->densokw)}}</td>
                                         <td>{{($item->dongia)}}</td>
-
+                                        @if($item->trangthai == 0 )
+                                            <td>Block</td>
+                                        @else
+                                            <td>Active</td>
+                                        @endif
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <button type="button" onclick="editData('{{($item->mabac)}}')" class="btn btn-success btn-sm btn-icon-text mr-3">
                                                     Edit
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
                                                 </button>
+                                                @if($item->trangthai == 0 )
+                                                <button type="button" onclick="DeleteData('{{($item->mabac)}}')" class="btn btn-primary btn-sm btn-icon-text mr-3">
+                                                        Active
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </button>
+                                                @else
+                                                    <button type="button" onclick="DeleteData('{{($item->mabac)}}')" class="btn btn-danger btn-sm btn-icon-text mr-3">
+                                                        Block
+                                                        <i class="typcn typcn-edit btn-icon-append"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -667,6 +683,20 @@
                 $('#gia').val(ketqua[i].dongia);
                 $('#mabac').val(ketqua[i].mabac);
             }
+        });
+
+
+    }
+    function DeleteData(mabac){
+        $.ajax({
+            url: 'http://localhost/electric/public/blockgiadien',
+            type: 'GET',
+            data: {
+                mabac: mabac,
+            }
+        }).done(function (ketqua) {
+            location.reload()
+            
         });
 
 

@@ -28,4 +28,5 @@ Route::get('/view-giadien', [\App\Http\Controllers\dienkeController::class, 'vie
 Route::get('/add-giadien', [\App\Http\Controllers\dienkeController::class, 'themgiadien']);
 Route::get('/getgiadien', [\App\Http\Controllers\dienkeController::class, 'getgiadien']);
 
+Route::get('/blockgiadien', [\App\Http\Controllers\dienkeController::class, 'blockgiadien']);
 
