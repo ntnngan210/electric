@@ -136,6 +136,17 @@ class dienkeController extends Controller
             $denngay = $date->format('Y-m-d') . ' ' . "00:00:00";
             $mabac = $request->input('mabac');
             if($mabac){
+                $item = DB::table('giadien')
+                    ->where('mabac', $mabac)->first();
+                DB::table('log')->insert([
+                    'macha' => $mabac,
+                    'tusokw' => $item->tusokw,
+                    'densokw' => $item->densokw,
+                    'dongia' => $item->dongia,
+                    'ngaycapnhat' => $item->ngayapdung
+
+                ]);
+
                 DB::table('giadien')
                 ->where('mabac', $mabac)
                     ->update([
@@ -184,6 +195,31 @@ class dienkeController extends Controller
             }
             return true;
 
+        }
+        public function getlog(Request $request){
+            $mabac = $request->input('mabac');
+            $data = DB::table('log')->where('macha','=',$mabac)
+                ->get();
+            $array=[];
+            foreach ($data as $key =>$value){
+                $array[$key]['mabac']=$value->mabac;
+                $array[$key]['macha']=$value->macha;
+                $array[$key]['tusokw']=$value->tusokw;
+                $array[$key]['densokw']=$value->densokw;
+                $array[$key]['dongia']=$value->dongia;
+                $array[$key]['ngaycapnhat']=$value->ngaycapnhat;
+            }
+            return $array;
+        }
+        public function kiemtra(Request $request){
+            $madk = $request->input('madk');
+            $ky =  $request->input('ky');
+            $data = DB::table('hoadon')->where('madk',$madk)->where('ky',$ky)->count();
+            if($data > 0){
+             echo 'false';
+
+            }else{echo 'true';
+            }
         }
 
 }

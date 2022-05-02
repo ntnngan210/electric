@@ -22,6 +22,7 @@ Route::get('/', [\App\Http\Controllers\dienkeController::class, 'index']);
 //    return "Hello vi-magento. Đây là route đầu tiên.";
 //});
 Route::get('/dien-ke', [\App\Http\Controllers\dienkeController::class, 'calculateElectric']);
+Route::get('/kiemtra', [\App\Http\Controllers\dienkeController::class, 'kiemtra']);
 Route::get('/hoa-don', [\App\Http\Controllers\dienkeController::class, 'getHoadon']);
 
 Route::get('/view-giadien', [\App\Http\Controllers\dienkeController::class, 'viewgiadien']);
@@ -29,4 +30,5 @@ Route::get('/add-giadien', [\App\Http\Controllers\dienkeController::class, 'them
 Route::get('/getgiadien', [\App\Http\Controllers\dienkeController::class, 'getgiadien']);
 
 Route::get('/blockgiadien', [\App\Http\Controllers\dienkeController::class, 'blockgiadien']);
+Route::get('/getlog', [\App\Http\Controllers\dienkeController::class, 'getlog']);
 

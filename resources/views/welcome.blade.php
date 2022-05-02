@@ -657,6 +657,7 @@
                 alert('Số điện và kỳ phải lớn hơn 0 ');
                 flag = false;
             }
+          
             if(flag == true) {
                 $.ajax({
                     url: 'http://localhost/electric/public/dien-ke',
@@ -689,7 +690,7 @@
                         </div>
                     </div>`);
 
-                    location.reload()
+
                 });
 
 

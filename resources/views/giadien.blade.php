@@ -486,7 +486,7 @@
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="data">
+                                    <tbody >
                                     @foreach($giadien as $key=> $item)
                                     <tr>
                                         <td>#{{($item->mabac)}}</td>
@@ -516,11 +516,40 @@
                                                         <i class="typcn typcn-edit btn-icon-append"></i>
                                                     </button>
                                                 @endif
+                                                <button type="button" onclick="getData('{{($item->mabac)}}')" class="btn btn-secondary btn-sm btn-icon-text mr-3">
+                                                    Log
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
                                     @endforeach
 
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <h5 class="mb-2 text-titlecase mb-4">Danh sách log </h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="table-responsive pt-3">
+                                <table id="" class="display table table-striped project-orders-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="ml-5">Mã bậc</th>
+                                        <th>Từ số</th>
+                                        <th>Đến số </th>
+                                        <th>Đơn giá</th>
+                                        <th>Ngay cập nhật</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody id="data">
 
                                     </tbody>
                                 </table>
@@ -579,51 +608,7 @@
 
     $(document).ready(function () {
         $('#table_id').DataTable();
-        $('#sodien').click(function () {
-            var madk1 = $('#madk').val();
 
-            var request = $.ajax({
-                url: 'http://localhost/electric/public/dien-ke',
-                type: 'GET',
-                data: {
-                    madk: madk1,
-                }
-            }).done(function (ketqua) {
-                ketqua = JSON.parse(ketqua);
-                if (ketqua.length > 0) {
-                    for (var i = 0; i <= ketqua.length; i++) {
-
-                        $('#infoCustomer').html(`<h5 class="mb-2 text-titlecase mb-4">Thông tin khách hàng</h5>
-                <div class="card-body bg-gradient-primary">
-                <input onClick="closex()" id="closeInfo" class="btn btn-danger" type="submit" value="X" />
-                <div class="row align-items-center h-100">
-                <div class="col-md-4">
-
-            </div>
-            <div class="col-md-8">
-                <h5 class="text-white text-center text-md-left"> Mã điện kế : ` + ketqua[i].madk + `</h5>
-                <h5 class="text-white text-center text-md-left"> Họ Tên : ` + ketqua[i].tenkh + `</h5>
-                <p class="text-white text-center text-md-left"> Địa chỉ : ` + ketqua[i].diachi + `</p>
-                <div class="d-flex align-items-center justify-content-between info pt-2">
-                    <div>
-                        <p class="text-white font-weight-bold"> Điện thoại : ` + ketqua[i].dt + `</p>
-                        <p class="text-white font-weight-bold">CMND : ` + ketqua[i].cmnd + `</p>
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>`)
-                    }
-                } else {
-                    $('#infoCustomer').html(`<p class="text-danger">Mã điện kế không đúng khách hàng không tồn tại </p>`);
-                }
-            });
-
-
-        });
         $('#btnthem').click(function () {
             var flag = true ;
             var tenbac1 = $('#tenbac').val();
@@ -686,6 +671,38 @@
         });
 
 
+    }
+    function getData(mabac){
+        alert(mabac);
+        $.ajax({
+            url: 'http://localhost/electric/public/getlog',
+            type: 'GET',
+            data: {
+                mabac: mabac,
+            }
+        }).done(function (ketqua) {
+            var data=``;
+            if (ketqua.length > 0) {
+                for (let i = 0 ; i < ketqua.length ; i++) {
+                    data += `<tr>
+
+                                        <td>`+ketqua[i].macha+`</td>
+                                        <td>`+ketqua[i].tusokw+`</td>
+                                        <td>`+ketqua[i].densokw+`</td>
+                                        <td>`+ketqua[i].dongia+`</td>
+                                        <td>`+ketqua[i].ngaycapnhat+`</td>
+
+                                    </tr>`
+                }
+
+                $('#data').html(data);
+
+            }else{
+                $('#data').html(data);
+            }
+
+
+        });
     }
     function DeleteData(mabac){
         $.ajax({
