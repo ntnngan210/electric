@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2022 at 05:19 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.28
+-- Generation Time: May 02, 2022 at 04:20 PM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -86,8 +86,8 @@ INSERT INTO `giadien` (`mabac`, `tenbac`, `tusokw`, `densokw`, `dongia`, `ngayap
 (3, 'bac 3', 151, 200, 1651, '2022-04-18 13:02:34', 1),
 (4, 'bac 4', 201, 300, 1788, '2022-04-18 13:02:34', 1),
 (5, 'bac 5', 301, 400, 1912, '2022-04-18 13:02:34', 1),
-(6, 'bac 6', 454545, 45454, 10000, '2022-04-26 00:00:00', 0),
-(7, 'bac7', 12114, 21212, 5, '2022-04-26 00:00:00', 0);
+(9, 'bac 6', 560, 700, 1557, '2022-05-01 00:00:00', 1),
+(10, 'bac 6', 560, 700, 158, '2022-05-01 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -114,10 +114,9 @@ CREATE TABLE `hoadon` (
 
 INSERT INTO `hoadon` (`mahd`, `madk`, `ky`, `tungay`, `denngay`, `chisodau`, `chisocuoi`, `tongthanhtien`, `ngaylaphd`, `tinhtrang`) VALUES
 ('HD0DK00110', 'DK001', '1', '2022-04-24 00:00:00', '2022-04-07 00:00:00', 0, 320, 10579607, '2022-04-24 00:00:00', b'0'),
+('HD0DK00113', 'DK001', '1', '2022-04-26 00:00:00', '2022-05-02 00:00:00', 541, 1000, 727158, '2022-05-02 00:00:00', b'0'),
 ('HD0DK00121', 'DK001', '2', '2022-04-07 00:00:00', '2022-04-24 00:00:00', 320, 526, 279723, '2022-04-24 00:00:00', b'0'),
-('HD0DK00152', 'DK001', '5', '2022-04-24 00:00:00', '2022-04-26 00:00:00', 526, 541, 18630, '2022-04-26 00:00:00', b'0'),
-('HD0DK00163', 'DK001', '6', '2022-04-26 00:00:00', '2022-04-26 00:00:00', 541, 54545, 103128055, '2022-04-26 00:00:00', b'0'),
-('HD0DK00340', 'DK003', '4', '2022-04-26 00:00:00', '2022-04-26 00:00:00', 0, 54545, 104162447, '2022-04-26 00:00:00', b'0');
+('HD0DK00133', 'DK001', '3', '2022-04-24 00:00:00', '2022-05-02 00:00:00', 526, 1500, 896567, '2022-05-02 00:00:00', b'0');
 
 -- --------------------------------------------------------
 
@@ -151,6 +150,29 @@ INSERT INTO `khachhang` (`makh`, `tenkh`, `diachi`, `dt`, `cmnd`) VALUES
 ('KH00000000013', 'jdsa 12', 'ádadasdad', '1231231313', '123333333'),
 ('KH00000000014', 'anhkhoat6@gmail.com', 'ádadasdad', '12312313133', '213133331'),
 ('KH00000000015', 'admin', 'ádadasdad', '12312313131', '322313132');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `mabac` int(11) NOT NULL,
+  `macha` int(11) NOT NULL,
+  `tusokw` int(11) NOT NULL,
+  `densokw` int(11) NOT NULL,
+  `dongia` int(11) NOT NULL,
+  `ngaycapnhat` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`mabac`, `macha`, `tusokw`, `densokw`, `dongia`, `ngaycapnhat`) VALUES
+(1, 9, 560, 700, 1548, '2022-05-01 00:00:00'),
+(2, 9, 560, 700, 1553, '2022-05-01 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -189,6 +211,12 @@ ALTER TABLE `khachhang`
   ADD PRIMARY KEY (`makh`);
 
 --
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`mabac`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -196,7 +224,13 @@ ALTER TABLE `khachhang`
 -- AUTO_INCREMENT for table `giadien`
 --
 ALTER TABLE `giadien`
-  MODIFY `mabac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `mabac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `log`
+--
+ALTER TABLE `log`
+  MODIFY `mabac` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
